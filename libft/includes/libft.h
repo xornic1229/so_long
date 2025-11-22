@@ -6,17 +6,17 @@
 /*   By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 17:54:35 by jaialons          #+#    #+#             */
-/*   Updated: 2025/11/20 12:06:14 by jaialons         ###   ########.fr       */
+/*   Updated: 2025/11/22 02:06:50 by jaialons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include "../get_next_line/get_next_line.h"
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdarg.h>
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -52,6 +52,6 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-char	*get_next_line(int fd);
+/* (printf y gnl se separan en sus headers propios) */
 
 #endif

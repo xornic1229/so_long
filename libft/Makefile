@@ -6,7 +6,7 @@
 #    By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 00:00:00 by jaialons          #+#    #+#              #
-#    Updated: 2025/11/20 12:08:26 by jaialons         ###   ########.fr        #
+#    Updated: 2025/11/22 02:06:48 by jaialons         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,7 @@ SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
       ft_putstr_fd.c ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c \
       ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
       ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c \
-      ft_tolower.c ft_toupper.c gnl/get_next_line.c gnl/get_next_line_utils.c \
-      gnl/get_next_line_bonus.c gnl/get_next_line_utils_bonus.c
+      ft_tolower.c ft_toupper.c
 OBJ = $(SRC:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iincludes
