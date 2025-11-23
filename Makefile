@@ -10,7 +10,8 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 SRCS = so_long.c \
-	src/read_map.c src/validate_map.c src/load_textures.c src/render.c
+	src/read_map.c src/validate_map.c src/validate_char.c src/load_textures.c src/render.c \
+	src/utils.c src/pathfind.c src/init.c
 OBJS = $(SRCS:.c=.o)
 
 MLX_DIR = minilibx-linux

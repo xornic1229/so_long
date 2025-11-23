@@ -13,62 +13,8 @@ int close_hook(t_game *g)
     return 0;
 }
 
-int key_hook(int keycode, t_game *g)
+static void check_win(t_game *g, int nx, int ny)
 {
-    int nx = g->player_x;
-    int ny = g->player_y;
-    int moved = 0;
-    
-    if (keycode == 65307) /* ESC */
-        close_hook(g);
-    else if (keycode == 'w')
-    {
-        ny--;
-        g->player_direction = 1;
-        moved = 1;
-    }
-    else if (keycode == 's')
-    {
-        ny++;
-        g->player_direction = 0;
-        moved = 1;
-    }
-    else if (keycode == 'a')
-    {
-        nx--;
-        g->player_direction = 2;
-        moved = 1;
-    }
-    else if (keycode == 'd')
-    {
-        nx++;
-        g->player_direction = 3;
-        moved = 1;
-    }
-    
-    if (!moved)
-        return 0;
-    
-    if (ny < 0 || ny >= g->height || nx < 0 || nx >= g->width)
-    {
-        render_map(g);
-        return 0;
-    }
-    
-    if (g->map[ny][nx] == '1')
-    {
-        render_map(g);
-        return 0;
-    }
-    
-    if (g->map[ny][nx] == 'E' && g->collected < g->collectibles)
-    {
-        render_map(g);
-        return 0;
-    }
-    
-    if (g->map[ny][nx] == 'C')
-        g->collected++;
     if (g->map[ny][nx] == 'E' && g->collected == g->collectibles)
     {
         g->moves++;
@@ -76,6 +22,26 @@ int key_hook(int keycode, t_game *g)
         ft_printf("¡Has ganado!\n");
         close_hook(g);
     }
+}
+
+int key_hook(int keycode, t_game *g)
+{
+    int nx = g->player_x;
+    int ny = g->player_y;
+    int moved = 0;
+
+    if (keycode == 65307)
+        close_hook(g);
+    handle_movement(keycode, g, &nx, &ny, &moved);
+    if (!moved)
+        return 0;
+    if (check_collision(g, nx, ny))
+    {
+        render_map(g);
+        return 0;
+    }
+    handle_collectible(g, nx, ny);
+    check_win(g, nx, ny);
     g->map[g->player_y][g->player_x] = '0';
     g->player_x = nx;
     g->player_y = ny;
@@ -92,21 +58,12 @@ int main(int argc, char **argv)
 
     if (argc != 2)
         game_error("Uso: ./so_long map/map1.ber");
-    g.map = NULL; g.width = 0; g.height = 0; g.player_x = -1; g.player_y = -1; 
-    g.collectibles = 0; g.collected = 0;
-    g.player_direction = 0;
-    g.moves = 0;
+    init_game(&g);
     if (!load_map(&g, argv[1]))
         game_error("No se pudo cargar mapa");
     if (!validate_map(&g))
         game_error("Mapa invalido");
-    g.mlx = mlx_init();
-    if (!g.mlx) game_error("mlx_init fallo");
-    g.offset_x = 0;
-    g.offset_y = 0;
-    g.win = mlx_new_window(g.mlx, g.width * TILE_SIZE, g.height * TILE_SIZE, "so_long");
-    if (!g.win) game_error("mlx_new_window fallo");
-    load_textures(&g);
+    setup_graphics(&g, g.width, g.height);
     render_map(&g);
     mlx_key_hook(g.win, key_hook, &g);
     mlx_hook(g.win, 17, 0, close_hook, &g);
@@ -114,3 +71,7 @@ int main(int argc, char **argv)
     free_map(g.map);
     return 0;
 }
+
+
+
+

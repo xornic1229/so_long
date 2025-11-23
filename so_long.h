@@ -55,5 +55,20 @@ int     key_hook(int keycode, t_game *g);
 
 /* utils */
 void    game_error(const char *msg);
+void    handle_movement(int keycode, t_game *g, int *nx, int *ny, int *moved);
+int     check_collision(t_game *g, int nx, int ny);
+void    handle_collectible(t_game *g, int nx, int ny);
+
+/* pathfind */
+void    init_bfs_visited(int **visited, t_game *g);
+void    bfs_explore(t_game *g, int **visited, int queue[1024][2], int *rear, int *collected_count);
+void    free_visited(int **visited, t_game *g);
+
+/* init */
+void    init_game(t_game *g);
+void    setup_graphics(t_game *g, int width, int height);
+
+/* validate */
+void    validate_char(t_game *g, char c, int *players, int *exits, int x, int y);
 
 #endif
