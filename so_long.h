@@ -37,6 +37,7 @@ typedef struct s_game {
     int offset_x;
     int offset_y;
     int player_direction;
+    int moves;
 } t_game;
 
 /* map */

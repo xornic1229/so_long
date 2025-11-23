@@ -2,10 +2,7 @@
 
 void game_error(const char *msg)
 {
-    write(2, "Error: ", 7);
-    if (msg)
-        write(2, msg, ft_strlen(msg));
-    write(2, "\n", 1);
+    ft_printf("Error: %s\n", msg);
     exit(EXIT_FAILURE);
 }
 
@@ -52,19 +49,39 @@ int key_hook(int keycode, t_game *g)
     if (!moved)
         return 0;
     
+    if (ny < 0 || ny >= g->height || nx < 0 || nx >= g->width)
+    {
+        render_map(g);
+        return 0;
+    }
+    
     if (g->map[ny][nx] == '1')
     {
         render_map(g);
         return 0;
     }
     
-    if (g->map[ny][nx] == 'C') g->collected++;
+    if (g->map[ny][nx] == 'E' && g->collected < g->collectibles)
+    {
+        render_map(g);
+        return 0;
+    }
+    
+    if (g->map[ny][nx] == 'C')
+        g->collected++;
     if (g->map[ny][nx] == 'E' && g->collected == g->collectibles)
-        game_error("Has ganado! (cerrar) ");
+    {
+        g->moves++;
+        ft_printf("Movimientos: %d\n", g->moves);
+        ft_printf("¡Has ganado!\n");
+        close_hook(g);
+    }
     g->map[g->player_y][g->player_x] = '0';
     g->player_x = nx;
     g->player_y = ny;
     g->map[ny][nx] = 'P';
+    g->moves++;
+    ft_printf("Movimientos: %d\n", g->moves);
     render_map(g);
     return 0;
 }
@@ -75,8 +92,10 @@ int main(int argc, char **argv)
 
     if (argc != 2)
         game_error("Uso: ./so_long map/map1.ber");
-    g.map = NULL; g.width = 0; g.height = 0; g.player_x = -1; g.player_y = -1; g.collectibles=0; g.collected=0;
+    g.map = NULL; g.width = 0; g.height = 0; g.player_x = -1; g.player_y = -1; 
+    g.collectibles = 0; g.collected = 0;
     g.player_direction = 0;
+    g.moves = 0;
     if (!load_map(&g, argv[1]))
         game_error("No se pudo cargar mapa");
     if (!validate_map(&g))

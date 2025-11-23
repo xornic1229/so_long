@@ -23,11 +23,16 @@ void render_tile(t_game *g, char c, int x, int y)
 
 void render_map(t_game *g)
 {
-    int y = 0; int x;
-    while (g->map[y])
+    int y = 0;
+    int x;
+    
+    if (!g || !g->map || g->width <= 0 || g->height <= 0)
+        return ;
+    
+    while (y < g->height && g->map[y])
     {
         x = 0;
-        while (g->map[y][x])
+        while (x < g->width && g->map[y][x])
         {
             render_tile(g, g->map[y][x], x, y);
             x++;
