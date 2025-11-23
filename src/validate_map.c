@@ -32,6 +32,7 @@ static int check_valid_path(t_game *g)
     int front = 0;
     int rear = 0;
     int found_exit = 0;
+    int collected_count = 0;
 
     visited = (int **)malloc(sizeof(int *) * g->height);
     y = 0;
@@ -57,6 +58,8 @@ static int check_valid_path(t_game *g)
         front++;
         if (g->map[y][x] == 'E')
             found_exit = 1;
+        if (g->map[y][x] == 'C')
+            collected_count++;
         if ((y > 0 && !visited[y - 1][x] && g->map[y - 1][x] != '1'))
         {
             visited[y - 1][x] = 1;
@@ -93,7 +96,7 @@ static int check_valid_path(t_game *g)
         y++;
     }
     free(visited);
-    return found_exit;
+    return (found_exit && collected_count == g->collectibles);
 }
 
 int validate_map(t_game *g)
@@ -129,7 +132,7 @@ int validate_map(t_game *g)
         }
         y++;
     }
-    if (players != 1 || exits < 1 || g->collectibles < 1)
+    if (players != 1 || exits != 1 || g->collectibles < 1)
         return 0;
     return check_valid_path(g);
 }
