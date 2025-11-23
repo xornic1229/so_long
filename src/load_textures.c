@@ -24,7 +24,7 @@ static void *create_color_tile(t_game *g, int color)
 static void *scale_image(t_game *g, void *src, int w, int h)
 {
     if (!src || w != 32 || h != 32 || TILE_SIZE == 32)
-        return src; /* only scale 32->TILE_SIZE */
+        return src;
     int sbpp, ssl, sendian;
     char *sdata = mlx_get_data_addr(src, &sbpp, &ssl, &sendian);
     void *dst = mlx_new_image(g->mlx, TILE_SIZE, TILE_SIZE);
@@ -58,6 +58,9 @@ void load_textures(t_game *g)
     g->tex.wall = load_one(g, "textures/wall.xpm", 0xFF222222);
     g->tex.floor = load_one(g, "textures/floor.xpm", 0xFF3E3E3E);
     g->tex.player = load_one(g, "textures/player.xpm", 0xFF2C7CFF);
+    g->tex.player_left = load_one(g, "textures/playerleft.xpm", 0xFF2C7CFF);
+    g->tex.player_right = load_one(g, "textures/playerright.xpm", 0xFF2C7CFF);
+    g->tex.player_back = load_one(g, "textures/playerback.xpm", 0xFF2C7CFF);
     g->tex.exit = load_one(g, "textures/exit.xpm", 0xFFFF2020);
     g->tex.collectible = load_one(g, "textures/collectible.xpm", 0xFFF8C800);
 }

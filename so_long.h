@@ -5,12 +5,10 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "libft/includes/libft.h"
-#include "ft_printf/ft_printf.h"
-#include "get_next_line/get_next_line.h"
 #include "minilibx-linux/mlx.h"
 
 #define BASE_TILE 32
-#define SCALE 6
+#define SCALE 4
 #define TILE_SIZE (BASE_TILE * SCALE)
 #define VALID_CHARS "01PCE"
 
@@ -18,6 +16,9 @@ typedef struct s_textures {
     void *wall;
     void *floor;
     void *player;
+    void *player_left;
+    void *player_right;
+    void *player_back;
     void *exit;
     void *collectible;
 } t_textures;
@@ -35,6 +36,7 @@ typedef struct s_game {
     int collected;
     int offset_x;
     int offset_y;
+    int player_direction;
 } t_game;
 
 /* map */

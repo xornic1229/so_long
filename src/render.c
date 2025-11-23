@@ -6,7 +6,17 @@ void render_tile(t_game *g, char c, int x, int y)
     int py = y * TILE_SIZE;
     mlx_put_image_to_window(g->mlx, g->win, g->tex.floor, px, py);
     if (c == '1') mlx_put_image_to_window(g->mlx, g->win, g->tex.wall, px, py);
-    else if (c == 'P') mlx_put_image_to_window(g->mlx, g->win, g->tex.player, px, py);
+    else if (c == 'P')
+    {
+        if (g->player_direction == 0)
+            mlx_put_image_to_window(g->mlx, g->win, g->tex.player, px, py);
+        else if (g->player_direction == 1)
+            mlx_put_image_to_window(g->mlx, g->win, g->tex.player_back, px, py);
+        else if (g->player_direction == 2)
+            mlx_put_image_to_window(g->mlx, g->win, g->tex.player_left, px, py);
+        else if (g->player_direction == 3)
+            mlx_put_image_to_window(g->mlx, g->win, g->tex.player_right, px, py);
+    }
     else if (c == 'C') mlx_put_image_to_window(g->mlx, g->win, g->tex.collectible, px, py);
     else if (c == 'E') mlx_put_image_to_window(g->mlx, g->win, g->tex.exit, px, py);
 }

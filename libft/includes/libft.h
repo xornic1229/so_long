@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include "../printf/ft_printf.h"
+# include "../get_next_line/get_next_line_bonus.h"
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
