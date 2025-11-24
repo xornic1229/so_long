@@ -1,0 +1,9 @@
+----------------8<-------------[ START TEST 
+        💻 TEST
+./a.out         🔎 YOUR OUTPUT:
+/usr/bin/ld: /tmp/cc1S1KuU.o: in function `main':
+main.c:(.text+0x67): undefined reference to `ft_swap'
+collect2: error: ld returned 1 exit status
+
+        ❌ COMPILATION ERROR
+----------------8<------------- END TEST ]
