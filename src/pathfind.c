@@ -1,63 +1,89 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pathfind.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/24 16:56:45 by jaialons          #+#    #+#             */
+/*   Updated: 2025/11/24 17:45:26 by jaialons         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../so_long.h"
 
-void init_bfs_visited(int **visited, t_game *g)
+void	init_bfs_visited(int **visited, t_game *g)
 {
-    int y = 0;
-    int x;
-    while (y < g->height)
-    {
-        x = 0;
-        while (x < g->width)
-        {
-            visited[y][x] = 0;
-            x++;
-        }
-        y++;
-    }
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < g->height)
+	{
+		x = 0;
+		while (x < g->width)
+		{
+			visited[y][x] = 0;
+			x++;
+		}
+		y++;
+	}
 }
 
-void bfs_explore(t_game *g, int **visited, int queue[1024][2], int *rear, int *collected_count)
+static void	check_direction(t_game *g, t_bfs *ctx, int base[2], int d[2])
 {
-    int y = queue[*rear][0];
-    int x = queue[*rear][1];
-    (void)collected_count;
-    if (y > 0 && !visited[y - 1][x] && g->map[y - 1][x] != '1')
-    {
-        visited[y - 1][x] = 1;
-        (*rear)++;
-        queue[*rear][0] = y - 1;
-        queue[*rear][1] = x;
-    }
-    if (y < g->height - 1 && !visited[y + 1][x] && g->map[y + 1][x] != '1')
-    {
-        visited[y + 1][x] = 1;
-        (*rear)++;
-        queue[*rear][0] = y + 1;
-        queue[*rear][1] = x;
-    }
-    if (x > 0 && !visited[y][x - 1] && g->map[y][x - 1] != '1')
-    {
-        visited[y][x - 1] = 1;
-        (*rear)++;
-        queue[*rear][0] = y;
-        queue[*rear][1] = x - 1;
-    }
-    if (x < g->width - 1 && !visited[y][x + 1] && g->map[y][x + 1] != '1')
-    {
-        visited[y][x + 1] = 1;
-        (*rear)++;
-        queue[*rear][0] = y;
-        queue[*rear][1] = x + 1;
-    }
+	int	n[2];
+
+	n[0] = base[0] + d[0];
+	n[1] = base[1] + d[1];
+	if (n[0] >= 0 && n[0] < g->height && n[1] >= 0 && n[1] < g->width
+		&& !ctx->visited[n[0]][n[1]] && g->map[n[0]][n[1]] != '1')
+	{
+		ctx->visited[n[0]][n[1]] = 1;
+		ctx->rear++;
+		ctx->queue[ctx->rear][0] = n[0];
+		ctx->queue[ctx->rear][1] = n[1];
+	}
 }
 
-void free_visited(int **visited, t_game *g)
+void	bfs_explore(t_game *g, t_bfs *ctx)
 {
-    int y = 0;
-    while (y < g->height)
-    {
-        free(visited[y]);
-        y++;
-    }
-    free(visited);
+	int	base[2];
+	int	d[4][2];
+	int	i;
+
+	d[0][0] = -1;
+	d[0][1] = 0;
+	d[1][0] = 1;
+	d[1][1] = 0;
+	d[2][0] = 0;
+	d[2][1] = -1;
+	d[3][0] = 0;
+	d[3][1] = 1;
+	base[0] = ctx->queue[ctx->front][0];
+	base[1] = ctx->queue[ctx->front][1];
+	i = 0;
+	while (i < 4)
+	{
+		check_direction(g, ctx, base, d[i]);
+		i++;
+	}
+}
+
+void	free_visited(int **visited, t_game *g)
+{
+	int	y;
+
+	y = 0;
+	while (y < g->height)
+	{
+		free(visited[y]);
+		y++;
+	}
+	free(visited);
+}
+
+int	path_is_valid(t_game *g)
+{
+	return (check_path_validity(g));
 }
