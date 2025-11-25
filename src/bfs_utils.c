@@ -6,7 +6,7 @@
 /*   By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 17:31:00 by jaialons          #+#    #+#             */
-/*   Updated: 2025/11/24 17:37:08 by jaialons         ###   ########.fr       */
+/*   Updated: 2025/11/25 18:06:15 by jaialons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ static int	bfs_process_queue(t_game *g, t_bfs *ctx)
 	{
 		if (g->map[ctx->queue[ctx->front][0]][ctx->queue[ctx->front][1]] == 'E')
 			found_exit = 1;
-		if (g->map[ctx->queue[ctx->front][0]][ctx->queue[ctx->front][1]] == 'C')
-			ctx->collected_count++;
 		bfs_explore(g, ctx);
 		ctx->front++;
 	}

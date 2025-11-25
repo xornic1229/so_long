@@ -6,7 +6,7 @@
 /*   By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 16:56:27 by jaialons          #+#    #+#             */
-/*   Updated: 2025/11/24 17:37:08 by jaialons         ###   ########.fr       */
+/*   Updated: 2025/11/25 17:52:18 by jaialons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ int	validate_map(t_game *g)
 	count_elements(g, &counters);
 	if (counters.players != 1 || counters.exits != 1 || g->collectibles < 1)
 		return (0);
-	return (path_is_valid(g));
+	return (check_path_validity(g));
 }

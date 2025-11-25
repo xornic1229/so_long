@@ -6,7 +6,7 @@
 /*   By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 17:18:28 by jaialons          #+#    #+#             */
-/*   Updated: 2025/11/24 17:37:08 by jaialons         ###   ########.fr       */
+/*   Updated: 2025/11/25 18:09:01 by jaialons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define BASE_TILE 32
-# define SCALE 4
-# define TILE_SIZE 128
+# define TILE_SIZE 160
 # define VALID_CHARS "01PCE"
 
 typedef struct s_textures
@@ -48,8 +46,6 @@ typedef struct s_game
 	t_textures	tex;
 	int			collectibles;
 	int			collected;
-	int			offset_x;
-	int			offset_y;
 	int			player_direction;
 	int			moves;
 }				t_game;
@@ -114,7 +110,6 @@ void			handle_collectible(t_game *g, int nx, int ny);
 void			init_bfs_visited(int **visited, t_game *g);
 void			bfs_explore(t_game *g, t_bfs *ctx);
 void			free_visited(int **visited, t_game *g);
-int				path_is_valid(t_game *g);
 int				check_path_validity(t_game *g);
 
 /* init */
