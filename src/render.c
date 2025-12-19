@@ -6,7 +6,7 @@
 /*   By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 16:56:50 by jaialons          #+#    #+#             */
-/*   Updated: 2025/11/24 16:58:51 by jaialons         ###   ########.fr       */
+/*   Updated: 2025/11/27 10:54:24 by jaialons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void	render_map(t_game *g)
 		}
 		y++;
 	}
+	render_score(g);
 }

@@ -6,7 +6,7 @@
 /*   By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 16:56:36 by jaialons          #+#    #+#             */
-/*   Updated: 2025/11/25 17:52:21 by jaialons         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:00:17 by jaialons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	setup_graphics(t_game *g, int width, int height)
 	g->mlx = mlx_init();
 	if (!g->mlx)
 		game_error("mlx_init fallo");
-	g->win = mlx_new_window(g->mlx, width * TILE_SIZE, height * TILE_SIZE,
+	g->win = mlx_new_window(g->mlx, width * TILE_SIZE, height * TILE_SIZE + 60,
 			"so_long");
 	if (!g->win)
 		game_error("mlx_new_window fallo");

@@ -6,7 +6,7 @@
 /*   By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 16:56:45 by jaialons          #+#    #+#             */
-/*   Updated: 2025/11/25 18:06:15 by jaialons         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:15:55 by jaialons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ static void	check_direction(t_game *g, t_bfs *ctx, int base[2], int d[2])
 	if (n[0] >= 0 && n[0] < g->height && n[1] >= 0 && n[1] < g->width
 		&& !ctx->visited[n[0]][n[1]] && g->map[n[0]][n[1]] != '1')
 	{
-		if (g->map[n[0]][n[1]] == 'E' && ctx->collected_count < g->collectibles)
+		if (g->map[n[0]][n[1]] == 'E')
+		{
+			ctx->visited[n[0]][n[1]] = 1;
 			return ;
+		}
 		ctx->visited[n[0]][n[1]] = 1;
 		ctx->rear++;
 		ctx->queue[ctx->rear][0] = n[0];

@@ -6,7 +6,7 @@
 /*   By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 17:31:00 by jaialons          #+#    #+#             */
-/*   Updated: 2025/11/25 18:06:15 by jaialons         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:18:25 by jaialons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,70 @@ static void	init_bfs_context(t_game *g, t_bfs *ctx)
 
 static int	bfs_process_queue(t_game *g, t_bfs *ctx)
 {
-	int	found_exit;
-
-	found_exit = 0;
 	while (ctx->front <= ctx->rear)
 	{
-		if (g->map[ctx->queue[ctx->front][0]][ctx->queue[ctx->front][1]] == 'E')
-			found_exit = 1;
 		bfs_explore(g, ctx);
 		ctx->front++;
 	}
-	return (found_exit);
+	return (1);
+}
+
+static void	find_exit_position(t_game *g, int *exit_y, int *exit_x)
+{
+	int	i;
+	int	j;
+
+	*exit_y = -1;
+	*exit_x = -1;
+	i = 0;
+	while (i < g->height && *exit_y == -1)
+	{
+		j = 0;
+		while (j < g->width)
+		{
+			if (g->map[i][j] == 'E')
+			{
+				*exit_y = i;
+				*exit_x = j;
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+static int	check_exit_accessibility(t_game *g)
+{
+	t_bfs	ctx;
+	int		exit_y;
+	int		exit_x;
+	int		result;
+
+	init_bfs_context(g, &ctx);
+	while (ctx.front <= ctx.rear)
+	{
+		bfs_explore(g, &ctx);
+		ctx.front++;
+	}
+	find_exit_position(g, &exit_y, &exit_x);
+	result = ctx.visited[exit_y][exit_x];
+	free_visited(ctx.visited, g);
+	return (result);
 }
 
 int	check_path_validity(t_game *g)
 {
 	t_bfs	ctx;
-	int		found_exit;
+	int		can_collect_all;
+	int		can_reach_exit;
 
 	init_bfs_context(g, &ctx);
-	found_exit = bfs_process_queue(g, &ctx);
+	bfs_process_queue(g, &ctx);
+	can_collect_all = (ctx.collected_count == g->collectibles);
 	free_visited(ctx.visited, g);
-	return (found_exit && ctx.collected_count == g->collectibles);
+	if (!can_collect_all)
+		return (0);
+	can_reach_exit = check_exit_accessibility(g);
+	return (can_reach_exit);
 }

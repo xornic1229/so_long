@@ -6,7 +6,7 @@
 /*   By: jaialons <jaialons@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 17:18:28 by jaialons          #+#    #+#             */
-/*   Updated: 2025/11/25 18:09:01 by jaialons         ###   ########.fr       */
+/*   Updated: 2025/11/27 10:48:14 by jaialons         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void			free_map(char **map);
 void			load_textures(t_game *g);
 void			render_map(t_game *g);
 void			render_tile(t_game *g, char c, int x, int y);
+void			render_score(t_game *g);
 void			*create_color_tile(t_game *g, int color);
 void			*scale_image(t_game *g, void *src, int w, int h);
 
